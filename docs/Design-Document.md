@@ -29,18 +29,37 @@ The project is considered done when all of the following are met:
 <br>
 
 ## Design Overview
+The program is designed to be modular, with each part of the program being implemented as a separate class (where it makes sense). This will allow for easy testing and debugging. The program will be implemented in a test-driven manner, with unit tests being written before the implementation of the program. The unit tests should define the expected behaviour of a given function or class, including all edge cases and the implementation should then be written to satisfy the tests. Unit tests should be written using the `pytest` library.
 
-### Command line interface
-The program is required to be run from command line, with 2 arguments - input file and output file. Therefore the very first step of the program should be to capture and parse the command line arguments. This can be done using the `argparse` library. This should be implemented as a separate function, so that it can be easily tested. A unit test should be written to test the parsing of the command line arguments.
+The program utilises a "fail fast" approach, where the program will exit as soon as an error is encountered. This is to prevent the program from continuing to run in an invalid state, which could lead to further errors and make debugging more difficult. In the cases of errors, an empty output file should be created to comply with the project definition.
 
-### Instantiation of the circuit solver class
-The next step is to create an instance of the circuit solver class (see in the outline of functions and classes).
+The overall program flow will be as follows:
 
+1. The program is launched from the command line with 2 arguments - input file and output file.
 
+2. The command line arguments are parsed. This should be implemented as a separate function, so that it can be easily tested. The cli parser should check if the input file exists and if the output file is writable. If not, the program should exit with an error message.
 
-### Unit testing
+3. The CircuitSimulation class is the instantilised. This is the main interface of the program.
+
+4. The input file is parsed using a `parse` method of the `CircuitSimulation` class. During parcing several atributes of the `CircuitSimulation` class are set. The **CIRCUIT**, **OUTPUT** and **TERMS** blocks are indentified. Each block is parsed seperately and the data is stored in the `CircuitSimulation` class. The **CIRCUIT** block is parsed into a graph data structure, which is used to represent the circuit, where each node is an instance of a `Component` class. The **OUTPUT** block is parsed into a list of dictionaries. The **TERMS** is parsed and `Source` and `Load` classes are instantiated.
+
+5. The circuit is solved using the `solve` method of the `CircuitSimulation` class. The circuit is solved with matrix multiplication and linear algebra using the "Chain Matrix Analysis" method. Numpy is used to perform all maths operations to increase performance.
+
+6. The solving step maybe be repeated several times for different frequnecy and paramattric sweeps. The results are stored in the `CircuitSimulation` class.
+
+7. The results are formatted and written to the output file with the `write_output` method of the `CircuitSimulation` class.
+
+8. The program exits.
+
+## Design Implementation
+
+### 
+
+## Unit testing
 #### List of unit tests
 1. CLI arguments parsing test
+
+## Style and organisation
 
 ## TODO:
  Link the "circuit solver" class to "Instantiation of the circuit solver class"
