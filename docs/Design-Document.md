@@ -53,6 +53,45 @@ The overall program flow will be as follows:
 
 ## Design Implementation
 
+### CLI arguments parsing
+A function will be implemented to parse the command line arguments and validate them.
+
+The function will take in a configuration that defines the expected command line arguments - `input_file` and `output_file`. The function will return the input and the output file paths. If one of the arguments is missing, the program will return `None` for the missing argument. 
+
+Logic downstream will check that both paths are present and raise an error if not.
+
+### `CircuitSimulation` class
+The `CircuitSimulation` class is the main interface of the program and is responsible for the overall program flow. The constructor of the class will have the following signature:
+
+```python
+def __init__(self, input_file: str = None):
+    pass
+```
+
+The input file is optional, as the class can be instantiated without an input file. The input file can be passed in later to the `parse` method of the class. The output file can be passed in as an argument to the `write_output` method of the class.
+
+The class will have the following methods main methods:
+- `__init__` - constructor
+- `parse` - parse the input file
+- `identify_blocks` - identify the **CIRCUIT**, **OUTPUT** and **TERMS** blocks in the input file
+- `parse_circuit` - parse the **CIRCUIT** block
+- `parse_output` - parse the **OUTPUT** block
+- `parse_terms` - parse the **TERMS** block
+- `convert_units` - method to convert between different units.
+- `solve` - solve the circuit
+- `write_output` - write the results to the output file
+
+Other methods will be implemented as needed to further abstract the program and make it more modular.
+
+The class will have the following attributes:
+- `input_file` - the input file path
+- `circuit` - a graph data structure representing the circuit
+- `required_outputs` - a list of dictionaries representing the output block
+- `source` - an instance of the `Source` class
+- `load` - an instance of the `Load` class
+
+
+
 ### 
 
 ## Unit testing
