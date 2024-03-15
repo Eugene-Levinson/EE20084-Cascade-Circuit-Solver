@@ -4,11 +4,17 @@
 
 ### Table of Contents
 
-1. [Stuff Here](#stuff-here)
-2. [More Stuff Here](#more-stuff-here)
-3. [Even More Stuff Here](#even-more-stuff-here)
-4. [Stuff Here](#stuff-here)
-5. [More Stuff Here](#more-stuff-here)
+1. [Project Overview and Definition of Done](#project-overview-and-definition-of-done)
+2. [Design Overview](#design-overview)
+3. [Design Implementation](#design-implementation)
+    1. [CLI arguments parsing](#cli-arguments-parsing)
+    2. [`CircuitSimulation` class](#circuitsimulation-class)
+    3. [`Component` Class](#component-class)
+    4. [`Source` Class](#source-class)
+    5. [`Load` Class](#load-class)
+    6. [Use of `Source` and `Load` classes](#use-of-source-and-load-classes)
+4. [Testing](#testing)
+5. [Style and organisation](#style-and-organisation)
 
 
 
@@ -29,9 +35,7 @@ The project is considered done when all of the following are met:
 <br>
 
 ## Design Overview
-The program is designed to be modular, with each part of the program being implemented as a separate class (where it makes sense). This will allow for easy testing and debugging. The program will be implemented in a test-driven manner, with unit tests being written before the implementation of the program. The unit tests should define the expected behaviour of a given function or class, including all edge cases and the implementation should then be written to satisfy the tests. Unit tests should be written using the `pytest` library.
-
-The program utilises a "fail fast" approach, where the program will exit as soon as an error is encountered. This is to prevent the program from continuing to run in an invalid state, which could lead to further errors and make debugging more difficult. In the cases of errors, an empty output file should be created to comply with the project definition.
+The program is designed to be modular, with each part of the program being implemented as a separate class (where it makes sense). This will allow for easy testing and debugging. The program will be implemented in a test-driven manner, with unit tests being written before the implementation of the program. 
 
 The overall program flow will be as follows:
 
@@ -93,15 +97,65 @@ The class will have the following attributes:
 
 
 ### `Component` Class
-The `Component` class wil
-## Unit testing
-#### List of unit tests
-1. CLI arguments parsing test
+The `Component` class represents each component in the circuit. The component class will be a base class for all other component classes. The class will mainly be responsible for storing the component's attributes and methods to convert between different units. For example, the `Resistor` class will inherit from the `Component` class and will have a method to convert resistance from ohms to kiloohms. It will also contain the matrix representation of the component. 
+
+The class will have the following methods:
+- `__init__` - constructor
+- `convert_units` - method to convert between different units.
+
+The class will have the following attributes:
+- `base_unit` - the base unit of the component
+- `value` - the value of the component
+- `abcd_matrix` - the matrix representation of the component
+
+
+### `Source` Class
+The `Source` class represents the source in the circuit. The class will be a base class for `Thevenin` and `Norton` classes.
+
+### `Load` Class
+The `Load` class represents the load in the circuit. It will store the information about the load.
+
+### Use of `Source` and `Load` classes
+The classes will be used in calculating the input and output values of the circuit. Depending on the type of the source, slighly different calculations will be performed. The class interface will abstract the calculations the downstream logic work irrespective of the source type.
+
+
+## Testing
+
+Two main strategies will be used for testing the program - unit tests and integration tests. All testing will be done using the `pytest` library.
+
+### Unit Tests
+Unit tests will be written for each function and class in the program. The tests will define the expected behaviour of the function or class, including all edge cases. The implementation of the function or class will then be written to satisfy the tests. This test driven approach will ensure that the program is implemented correctly and that all edge cases are handled. The tests will check that a given input produces the expected output. This will insure that if the implementation of the function or class changes, there will be a method to verify that the new implementation will produce appropriate results and fit the expected behaviour.
+
+### Integration Tests
+Integration tests will be written to test the program as a whole. The tests provided on moodle can be considered as integration tests and will be used as such.
+
+### Main focus of testing
+There are three critical cases that the test will focus on:
+- The input is the "ideal" case - this will test the functionality of the program when the input file is valid and the program is able to solve the circuit and produce the correct output.
+- The input is valid but is a variation of the ideal case, for example the units are different or the circuit is more complex. This will test the robustness of the program and ensure that it can handle different inputs.
+- The input is invalid, missing or otherwise - this will test that the program produces an empty output file when the input file is invalid.
+
+
+### Error Handling
+The program will use a "fail fast" approach, where the program will exit as soon as an error is encountered. This is to prevent the program from continuing to run in an invalid state, which could lead to further errors and make debugging more difficult. In the cases of errors, an empty output file should be created to comply with the project definition.
+
+### Key unit tests
+The following arethe key unit tests that will be written for the program. However, this is not an exhaustive list and more tests will be written as needed:
+
+- Testing of the CLI interface
+- Testing of the `parse` method of the `CircuitSimulation` class. 
+- Testing of the `identify_blocks` method of the `CircuitSimulation` class
+- Testing of the `parse_circuit` method of the `CircuitSimulation` class
+- Testing of the `parse_output` method of the `CircuitSimulation` class
+- Testing of the `parse_terms` method of the `CircuitSimulation` class
+- Testing of the `convert_units` method of the `CircuitSimulation` class
+- Testing of the `solve` method of the `CircuitSimulation` class
+- Testing of the `write_output` method of the `CircuitSimulation` class
+
 
 ## Style and organisation
+The program will be written in a modular and object-oriented manner. Each part of the program will be implemented as a separate class or function. This will allow for easy testing and debugging. 
 
-## TODO:
- Link the "circuit solver" class to "Instantiation of the circuit solver class"
+Classes and function will be documented with doc strings and type hints. The program will be written in a PEP8 compliant manner.
 
-
-
+The program will be organised into several files and directories to make it more modular and easier to navigate. However, this will be adjusted for the final submission if the program is required to be in a single file.
