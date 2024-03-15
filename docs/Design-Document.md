@@ -12,8 +12,7 @@
     3. [Component Class](#component-class)
     4. [Source Class](#source-class)
     5. [Load Class](#load-class)
-    6. [Use of Source and Load classes]
-    (#use-of-source-and-load-classes)
+    6. [Use of Source and Load classes](#use-of-source-and-load-classes)
     7. [Algorythm outline](#algorythm-outline)
 4. [Testing](#testing)
 5. [Style and organisation](#style-and-organisation)
