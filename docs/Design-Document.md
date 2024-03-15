@@ -92,8 +92,8 @@ The class will have the following attributes:
 
 
 
-### 
-
+### `Component` Class
+The `Component` class wil
 ## Unit testing
 #### List of unit tests
 1. CLI arguments parsing test
