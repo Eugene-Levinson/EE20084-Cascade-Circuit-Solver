@@ -118,6 +118,13 @@ The `Load` class represents the load in the circuit. It will store the informati
 ### Use of `Source` and `Load` classes
 The classes will be used in calculating the input and output values of the circuit. Depending on the type of the source, slighly different calculations will be performed. The class interface will abstract the calculations the downstream logic work irrespective of the source type.
 
+### Algorythm outline
+- CLI arguments are parsed and validated - done using the `argparse` library and a few `if` check to see if the input file exists and the output file is writable using the `os` library. 
+
+- Parsing of the input file. XML style formatting can be parsed using regex. The `re` library will be used to parse the input file. The `parse` method of the `CircuitSimulation` class will be used to parse the input file. The method will identify the **CIRCUIT**, **OUTPUT** and **TERMS** blocks in the input file. Each block will be parsed separately and the data will be stored in the `CircuitSimulation` class.
+
+- The solving of the circuit requies solving a system of linear equations. This can be done using the "Chain Matrix Analysis" method. Numpy will be used to perform all maths operations to increase performance.. Majority of the Math has been defined in the project specification.
+
 
 ## Testing
 
